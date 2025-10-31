@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 2 of Assignment 9</title>
+    <script src="js/jquery-3.6.4.min.js"></script>
+    <script>
+        $(function() {
+            $('#normalButton').click(function () {
+                window.alert('Normal button clicked!');
+            })
+            $('#bindButton').bind('click', function() {
+                window.alert('Bind button clicked!');
+            });
+            $('#onButton').on('click', function() {
+                window.alert('On button clicked!');
+            });
+            $('body').on({
+                click: function() {
+                    window.alert('A button has been clicked!');
+                }
+            }, 'button');
+            // $('body').on('mouseenter mouseleave', 'div', function () {
+            //     window.alert('Mouse entered or left the div!');
+            // })
+            $('body').on({
+                mouseenter: function() {
+                    $(this).append('<span>Mouse entered the div!</span>');
+                },
+                mouseleave: function() {
+                    $(this).append('<span>Mouse left the div!</span>');
+                },
+                click: function() {
+                    $(this).append('<span>Clicked the div!</span>');
+                }
+            }, 'div');
+            $("#moduleMediaLink").on('click', function(event) {
+                event.preventDefault();
+                $(this).css('color', 'red');
+                window.alert('Triggered by: ' + this.nodeName);
+            });
+            $(window).resize(function() { 
+                $("#resizeDiv").text($(window).width());
+             });
+            $('#textInput').focus(function() {
+                $(this).css('background-color', 'lightgray');
+            }).blur(function() {
+                $(this).css('background-color', 'white');
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="normalButton">Click Me!</button>
+    <button id="bindButton">Bind Click!</button>
+    <button id="onButton">On Click!</button>
+
+    <button id="button1">Button 1</button>
+    <button id="button2">Button 2</button>
+
+    <div style="width:400px;height:400px;background-color:red;">
+        This is my div tag.
+    </div>
+
+    <a href="https://modulemedia.com" id="moduleMediaLink">Visit module media website</a>
+
+    <div id="resizeDiv" style="background-color: pink; border: 1px solid black; padding: 10px;"></div>
+
+    <input type="text" id="textInput" placeholder="Input something here..." style="width: 200px;" />
+
+    <form id="userForm">
+        <input type="text" id="nameInput" placeholder="Enter your name" style="width: 200px;" />
+        <input type="email" id="emailInput" placeholder="Enter your email" style="width: 200px;" />
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        $('#userForm').on('submit', function(event) {
+            event.preventDefault();
+            let name = $('#nameInput').val();
+            let email = $('#emailInput').val();
+            let isValid = true;
+
+            // if name is left empty, have a red border
+            if (!name) {
+                $('#nameInput').css('border', '2px solid red');
+                isValid = false;
+            } else {
+                $('#nameInput').css('border', '2px solid green');
+            }
+
+            // if email is left empty, have a red border
+            if (!email) {
+                $('#emailInput').css('border', '2px solid red');
+                isValid = false;
+            } else {
+                $('#emailInput').css('border', '2px solid green');
+            }
+
+            if (!isValid) {
+                alert('Both fields are required!');
+            }
+        });
+    </script>
+</body>
+</html>
